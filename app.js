@@ -88,21 +88,24 @@ document.addEventListener('DOMContentLoaded', () => {
         cardsChosenId = []
         resultDisplay.textContent = cardsWon.length
 
-        if (carsWon.length === cardArray.length/2) {
+        if (cardsWon.length === cardArray.length/2) {
             resultDisplay.textContent = "You win"
         }
 
     }
 
     function flipCard() {
-        var cardId = this.getAttribute('data-id')
-        cardsChosen.push(cardArray[cardId].name)
-        cardsChosenId.push(cardId)
-        this.setAttribute('src', cardArray[cardId].img)
-        if (cardsChosen.length === 2) {
-            setTimeout(checkForMatch, 500);
+        if (this.getAttribute('src') !== 'image/white.png') {
+            var cardId = this.getAttribute('data-id')
+            if (cardsChosenId[0] !== cardId) {
+                cardsChosen.push(cardArray[cardId].name)
+                cardsChosenId.push(cardId)
+            }
+            this.setAttribute('src', cardArray[cardId].img)
+            if (cardsChosen.length === 2 && cardsChosenId[0] !== cardsChosenId[1]) {
+                setTimeout(checkForMatch, 500);
+            }
         }
     }
-
     createBoard()
 })
